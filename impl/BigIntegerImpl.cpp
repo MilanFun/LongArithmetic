@@ -109,16 +109,62 @@ char* BigInteger::sub(const char* a, const char* b)
     }
 
     res[i + 1] = '\0';
-    return res;   
+    return Util::reverse(res, 0);   
 }
 
 BigInteger& BigInteger::operator+(BigInteger& bigInteger)
 {
-    if (this->isNegative() && bigInteger.isNegative() || 
-        !this->isNegative() && !bigInteger.isNegative()) 
+    bool a = this->isNegative();
+    bool b = bigInteger.isNegative();
+    int c = Util::compare(this->getNumber(), bigInteger.getNumber());
+
+    if (!a && !b)
+    {
+        this->setNumber(this->add(this->getNumber(), bigInteger.getNumber()));
+        this->setNegative(false);
+    }
+
+    if (a && b)
     {
         this->setNumber(this->add(this->getNumber(), bigInteger.getNumber()));
         this->setNegative(true);
+    }
+
+    if (!a && b || a && !b)
+    {
+        if (c == 1)
+        {
+            if (!a && b) 
+            {
+                this->setNumber(this->sub(this->getNumber(), bigInteger.getNumber()));
+                this->setNegative(false);
+            }
+            else 
+            {
+                this->setNumber(this->sub(bigInteger.getNumber(), this->getNumber()));
+                this->setNegative(true);
+            }
+        }
+        else if (c == 0)
+        {
+            char* z = new char[1];
+            z[0] = '0';
+            this->setNumber(z);
+            this->setNegative(false);
+        }
+        else
+        {
+            if (!a && b)
+            {
+                this->setNumber(this->sub(this->getNumber(), bigInteger.getNumber()));
+                this->setNegative(true);
+            }
+            else
+            {
+                this->setNumber(this->sub(bigInteger.getNumber(), this->getNumber()));
+                this->setNegative(false); 
+            }
+        }
     }
     return *this;
 }
@@ -130,25 +176,73 @@ BigInteger& BigInteger::operator+=(BigInteger& bigInteger)
 
 BigInteger& BigInteger::operator-(BigInteger& bigInteger)
 {
-    if (!this->isNegative() && bigInteger.isNegative())
+    bool a = this->isNegative();
+    bool b = bigInteger.isNegative();
+    int c = Util::compare(this->getNumber(), bigInteger.getNumber());
+
+    if (!a && !b)
+    {
+        if (c == 1)
+        {
+            this->setNumber(this->sub(this->getNumber(), bigInteger.getNumber()));
+            this->setNegative(false);
+        }
+
+        if (c == -1)
+        {
+            this->setNumber(this->sub(bigInteger.getNumber(), this->getNumber()));
+            this->setNegative(true);
+        }
+
+        if (c == 0)
+        {
+            char* z = new char[1];
+            z[0] = '0';
+            this->setNumber(z);
+            this->setNegative(false);
+        }
+    }
+
+    if (a && b)
+    {
+        if (c == 1)
+        {
+            this->setNumber(this->sub(this->getNumber(), bigInteger.getNumber()));
+            this->setNegative(true);
+        }
+
+        if (c == -1)
+        {
+            this->setNumber(this->sub(bigInteger.getNumber(), this->getNumber()));
+            this->setNegative(false);
+        }
+
+        if (c == 0)
+        {
+            char* z = new char[1];
+            z[0] = '0';
+            this->setNumber(z);
+            this->setNegative(false);
+        }
+    }
+
+    if (!a && b)
     {
         this->setNumber(this->add(this->getNumber(), bigInteger.getNumber()));
-        this->setNegative(false);
-        return *this;
+        this->setNegative(false); 
     }
-    
-    if (this->isNegative() && !bigInteger.isNegative())
+
+    if (a && !b)
     {
         this->setNumber(this->add(this->getNumber(), bigInteger.getNumber()));
-        this->setNegative(false);
-        return *this;
+        this->setNegative(true);
     }
+    return *this;
 }
 
 BigInteger& BigInteger::operator-=(BigInteger& bigInteger)
 {
-    //TO-DO
-    return *this;
+    return *this + bigInteger;
 }
 
 void BigInteger::operator=(const BigInteger& bigInteger)

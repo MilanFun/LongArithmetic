@@ -1,2 +1,0 @@
-/home/aleksey/CProject/build/CMakeFiles/edit_cache.dir
-/home/aleksey/CProject/build/CMakeFiles/rebuild_cache.dir
