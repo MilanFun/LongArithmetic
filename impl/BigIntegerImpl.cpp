@@ -109,7 +109,12 @@ char* BigInteger::sub(const char* a, const char* b)
     }
 
     res[i + 1] = '\0';
-    return Util::reverse(res, 0);   
+    char* r = Util::reverse(res, 0);
+    while (*r == '0')
+    {
+        r++;
+    }
+    return r;   
 }
 
 BigInteger& BigInteger::operator+(BigInteger& bigInteger)
