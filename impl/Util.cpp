@@ -1,4 +1,4 @@
-#include "Util.h"
+#include "../api/Util.h"
 
 char* Util::copy(const char* str)
 {
@@ -68,4 +68,11 @@ int Util::compare(const char* a, const char* b)
         }
     }
     return 0;
+}
+
+void Util::swap(const char* a, const char* b)
+{
+    const char* tmp = a;
+    a = b;
+    b = tmp;
 }

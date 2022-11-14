@@ -9,6 +9,7 @@ public:
     static char* reverse(const char*, int);
     static char* verse(const char*);
     static int compare(const char*, const char*);
+    static void swap(const char*, const char*);
 };
 
 #endif
