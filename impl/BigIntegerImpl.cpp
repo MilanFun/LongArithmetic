@@ -1,5 +1,5 @@
-#include "../api/BigInteger.h"
-#include "../api/Util.h"
+#include <BigInteger.h>
+#include <Util.h>
 
 BigInteger::BigInteger()
 {

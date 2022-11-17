@@ -1,7 +1,8 @@
 #ifndef BIGINTEGER_H
 #define BIGINTEGER_H
 
-#include "IBigInteger.h"
+#include <iostream>
+using namespace std;
 
 class BigInteger
 {
